@@ -243,7 +243,7 @@ class Grozs_Widget_Options extends Widget_Base {
         }
 
         echo '<div class="grozs-option"><h6>Materiāls</h6><select name="grozs_materials" id="material">';
-        echo '<option value="izveleties" disabled selected>Izvēlēties</option>>';
+        echo '<option value="izveleties" disabled selected>Izvēlēties</option>';
 		echo '<option value="priede">Priede</option>';
         echo '<option value="osis">Osis (iesakām)</option>';
         echo '<option value="ozols">Ozols</option>';
