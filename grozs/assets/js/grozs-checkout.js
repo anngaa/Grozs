@@ -96,6 +96,7 @@ jQuery(document).ready(function ($) {
             url: grozs_ajax.ajax_url,
             data: {
                 action: 'submit_grozs_order',
+                nonce: grozs_ajax.nonce,
                 form: formData,
                 cart: cart
             },

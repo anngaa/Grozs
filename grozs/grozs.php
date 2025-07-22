@@ -96,7 +96,8 @@ function grozs_enqueue_assets() {
     );
 
     wp_localize_script('grozs-checkout', 'grozs_ajax', [
-        'ajax_url' => admin_url('admin-ajax.php')
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('grozs_order_nonce'),
     ]);
 }
 add_action('wp_enqueue_scripts', 'grozs_enqueue_assets');
