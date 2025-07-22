@@ -7,8 +7,9 @@ add_action('wp_ajax_submit_grozs_order', 'grozs_handle_order');
 add_action('wp_ajax_nopriv_submit_grozs_order', 'grozs_handle_order');
 
 function grozs_handle_order() {
+    check_ajax_referer('grozs_order_nonce', 'nonce');
     $form = $_POST['form'] ?? [];
-	$cart = $_POST['cart'] ?? [];
+        $cart = $_POST['cart'] ?? [];
 
     if (empty($form) || empty($cart)) {
         wp_send_json_error(['message' => 'Trūkst datu.']);
