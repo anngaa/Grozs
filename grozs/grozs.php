@@ -48,41 +48,49 @@ function grozs_load_elementor_widgets() {
 function grozs_enqueue_assets() {
     wp_enqueue_script('jquery');
 
-	wp_enqueue_script(
+    wp_enqueue_script(
+        'grozs-utils',
+        GROZS_URL . 'assets/js/grozs-utils.js',
+        ['jquery'],
+        '1.0',
+        true
+    );
+
+    wp_enqueue_script(
         'grozs-cena',
         GROZS_URL . 'assets/js/grozs-cena.js',
-        ['jquery'],
+        ['jquery', 'grozs-utils'],
         '1.0',
         true
     );
-	
-	wp_enqueue_script(
+
+    wp_enqueue_script(
         'grozs-cart',
         GROZS_URL . 'assets/js/grozs-cart.js',
-        ['jquery'],
+        ['jquery', 'grozs-utils'],
         '1.0',
         true
     );
 	
-	wp_enqueue_script(
+    wp_enqueue_script(
         'grozs-addbutton',
         GROZS_URL . 'assets/js/grozs-addbutton.js',
-        ['jquery'],
+        ['jquery', 'grozs-utils'],
         '1.0',
         true
     );
-	wp_enqueue_script(
+    wp_enqueue_script(
         'grozs-gallery',
         GROZS_URL . 'assets/js/grozs-gallery.js',
-        ['jquery'],
+        ['jquery', 'grozs-utils'],
         '1.0',
         true
     );
-	
-	wp_enqueue_script(
+
+    wp_enqueue_script(
         'grozs-init',
         GROZS_URL . 'assets/js/grozs-init.js',
-        ['jquery'],
+        ['jquery', 'grozs-utils'],
         '1.0',
         true
     );
@@ -90,7 +98,7 @@ function grozs_enqueue_assets() {
     wp_enqueue_script(
         'grozs-checkout',
         GROZS_URL . 'assets/js/grozs-checkout.js',
-        ['jquery'],
+        ['jquery', 'grozs-utils'],
         '1.0',
         true
     );
