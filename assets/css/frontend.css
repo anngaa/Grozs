@@ -1,0 +1,347 @@
+.widget_grozs_cart_widget {
+        line-height: 22px;
+        margin-right: 5px;
+}
+.open-grozs-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+.open-grozs-button:hover {
+    color:#6e4424;
+}
+.open-grozs-button i {
+    position: relative;
+}
+.open-grozs-button i .grozs-cart-all-count {
+    line-height: 6px;
+    font-size: 6px;
+    padding: 4px;
+    vertical-align: middle;
+    background: #666;
+    color: #fff !Important;
+    border-radius: 5px;
+    position: absolute;
+    top: -12px;
+    left: 10px;
+    white-space: nowrap;
+    display:none;
+}
+.open-grozs-button:hover i .grozs-cart-all-count {
+    background: #6e4424;
+}
+.grozs-cart {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    bottom: 20px;
+    transform: translateX(100%);
+    width: 100%;
+    max-width: 400px;
+    min-height: 500px;
+    max-height: 100vh;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    border: 1px solid #eaeaea;
+    display: flex;
+    flex-direction: column;
+    transition: transform .3s ease-in-out;
+    z-index: 9999;
+}
+
+body.admin-bar .grozs-cart {
+    top: 52px;
+}
+.grozs-cart.open {
+    transform: translateX(0);
+    right: 20px;
+}
+
+.grozs-cart-header {
+    display: flex;
+    background: #fafafa;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.grozs-cart-header .grozs-cart-close-button {
+    padding: 0px;
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grozs-cart-header .grozs-cart-close-button:hover {
+    color: #333 !Important;
+    border-color: #bbb;
+    transition: all .2s ease-in-out;
+}
+
+.grozs-cart-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.cart-empty {
+    font-style: italic;
+    color: #666;
+}
+
+.grozs-cart-footer {
+    padding: 20px;
+    background: #fafafa;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    gap: 10px;
+}
+
+.grozs-cart-footer .view-cart-button {
+    flex-grow: 1;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.1;
+    padding: 15px;
+    text-decoration: none;
+    border: 2px solid #ddd;
+    background: none;
+    color: #666;
+    transition: all .2s ease-in-out;
+}
+
+.grozs-cart-footer .view-cart-button i.fi {
+    font-size: 10px;
+    margin-left: 10px;
+}
+
+.grozs-cart-footer .view-cart-button:hover {
+    background: #6e4424 !important;
+    color: #fff !important;
+    border-color: #6e4424 !important;
+    transition: all .2s ease-in-out;
+}
+        
+.grozs-cart-item {
+    display: flex;
+    align-items: center; /* lai saturs vertikāli izlīdzinās */
+    gap: 10px; /* atstarpe starp kolonnām */
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eaeaea;
+}
+
+.grozs-cart-total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eaeaea;
+    font-size: 14px;
+}
+    
+.grozs-cart-image {
+    width: 50px;
+    flex-shrink: 0;
+}
+.grozs-cart-details {
+    line-height: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.grozs-cart-remove {
+    display: flex;
+    flex-shrink: 0;
+    padding-left: 10px;
+}
+    
+.grozs-cart-remove .grozs-remove-item {
+    padding: 0px;
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1;
+    transition: all .2s ease-in-out;
+}
+    
+.grozs-cart-remove .grozs-remove-item:hover {
+    color: #333;
+    border-color: #bbb;
+    transition: all .2s ease-in-out;
+}
+
+button.grozs-add-button, button.grozs-add-button:hover {
+    transition: all .2s ease-in-out;
+}
+
+button.grozs-add-button[disabled] {
+    background: #eaeaea;
+    border-color: #eaeaea;
+    color: #999;
+    pointer-events: none;
+}
+
+/* ===================================
+Checkout-Summary
+=================================== */
+
+.grozs-checkout-summary {
+    border: solid 1px #eaeaea;
+}
+
+.checkout-sumary-header {
+    padding: 15px 20px;
+    border-bottom: solid 1px #eaeaea;
+}
+
+#grozs-order-summary {
+    padding: 20px;
+}
+
+.grozs-order-total {
+    display: flex;
+    padding: 15px 20px;
+    background: #fafafa;
+    border-top: solid 1px #eaeaea;
+}
+
+.grozs-total-text {
+    flex-grow: 1;
+}
+
+#grozs-total-sum {
+    flex-shrink: 0;
+}
+
+.checkout-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: solid 1px #eaeaea;
+}
+
+.checkout-item-img {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+}
+
+.checkout-item-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 5px;
+    padding-right: 10px;
+    line-height: 1;
+}
+
+.checkout-item-options {
+    line-height: 1;
+    flex-grow: 1;
+}
+
+.checkout-item:last-child {
+    margin-bottom: 0 !Important;
+}		
+.grozs-checkout-item-remove {
+    flex-shrink: 0;
+    display: flex;
+    padding-left: 10px;
+}
+        
+.grozs-checkout-item-remove .grozs-remove-checkout-item {
+    padding: 0px;
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1;
+    transition: all .2s ease-in-out;
+}
+        
+.grozs-checkout-item-remove .grozs-remove-checkout-item:hover {
+    color: #333;
+    border-color: #bbb;
+    transition: all .2s ease-in-out;
+}
+
+.grozs-submit-button {
+    transition: all .2s ease-in-out;
+}
+
+.grozs-price-value {
+    font-weight: bold;
+    line-height: 1;
+}
+
+.grozs-price-value.disabled {
+    color: #999;
+}
+.grozs-price-text-before {
+    font-size: 14px;
+}
+.grozs-price-currency {
+    font-size: 70%;
+    margin-right: 2px;
+}
+
+/* ===================================
+Tablets
+=================================== */
+
+@media (max-width: 1024px) {
+    .grozs-cart.open {
+        right: 0;
+    }
+
+    .grozs-option {
+        flex-direction: column;
+        justify-content: flex-start;;
+    }
+    .grozs-option-input {
+        width: 100%;
+    }
+}
+
+/* ===================================
+Mobile
+=================================== */
+
+@media (max-width: 767px) {
+    .grozs-price-table {
+        font-size: 12px !important;
+    }
+
+    .grozs-price-table tr.sizes-row {
+        background: #fff !important;
+    }
+
+    .grozs-price-table td:first-child,
+    .grozs-price-table th:first-child {
+        min-width: 45%; /* vai jebkura cita vērtība */
+    }
+
+    .grozs-price-table .hide-mobile {
+        display: none;
+    }
+}
