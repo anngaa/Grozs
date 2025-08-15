@@ -76,7 +76,7 @@ add_action('admin_head-index.php', function () {
         /* PASŪTĪJUMI */
         #dashboard_right_now .grozs-at-a-glance-pasutijumi:before,
         .at-a-glance .grozs-at-a-glance-pasutijumi:before {
-            content: "\f498"; /* dashicons-admin-post (universāls) */
+            content: "\f481"; /* dashicons-admin-post (universāls) */
             font: normal 20px/1 dashicons;
             speak: never;
         }
