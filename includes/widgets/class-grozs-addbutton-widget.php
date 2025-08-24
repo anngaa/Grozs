@@ -133,7 +133,7 @@ class Grozs_AddButton_Widget extends Widget_Base {
         <div
             id="<?php echo esc_attr($container_id); ?>"
             class="grozs-product-container"
-            style="display: flex; flex-direction: column; align-items: flex-start;"
+            style="display: flex; flex-direction: column; align-items: flex-end;"
             data-product-id="<?php echo esc_attr($product_id); ?>"
             data-title="<?php echo esc_js($title); ?>"
             data-image="<?php echo esc_url($image); ?>"
@@ -150,8 +150,8 @@ class Grozs_AddButton_Widget extends Widget_Base {
             </button>
 
             <div class="grozs-cart-feedback"
-                style="display: none; width: auto; padding: 10px 20px; color:green; font-size:14px; margin-top:10px; white-space:nowrap; border: solid 1px; border-color: green;">
-                ✔ Produkts pievienots grozam
+                style="display: none; width: auto; padding: 15px; line-height: 1; color:green; font-size:14px; margin-top:10px; white-space:nowrap; border: solid 1px; border-color: green;">
+                <i class="fa-solid fa-cart-arrow-down" style="margin-right: 5px;"></i> Produkts pievienots grozam
             </div>
         </div>
         <?php

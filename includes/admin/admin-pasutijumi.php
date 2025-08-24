@@ -11,272 +11,7 @@ function grozs_admin_head_setup_orders() {
         // 1. Noņem visus admin_notices, lai tie netiktu rādīti augšpusē
         remove_all_actions('admin_notices');
 
-        // 2. Pievieno CSS stilus
-        echo '<style>
-            body.wp-admin {
-                background-color: #2b2b2b !important;
-            }
-            #wpwrap, #wpcontent, #wpbody, #wpbody-content {
-                background-color: #2b2b2b !important;
-            }
-            .wrap .notice, .wrap .grozs-admin-header .notice {
-                display: inline-block; 
-                margin: 15px 0 0 0; 
-                background:#333; 
-                color:#ddd; 
-                border: solid 1px #444; 
-                border-left: solid 4px #666;
-            }
-            .grozs-admin-header .notice.notice-error {
-                border-left-color: #d63638;
-            }
-            .form-table td, .form-table th { 
-                width: auto; 
-                margin-bottom: 10px; 
-                padding: 0 10px 0 0 !important; 
-                color: #999; 
-                display:inline-block; 
-            }
-            .form-table th { 
-                color: #ddd; 
-            }
-            .wp-list-table thead th { 
-                border-bottom: 1px solid #444 !important; 
-                box-shadow: none !important; 
-                color: #fff !important; 
-            }
-            .wp-list-table th, .wp-list-table td { 
-                vertical-align: middle; 
-                color: #999; 
-            }
-            .wp-list-table .is-open td {
-                color: #fff;
-            }
-            .wp-list-table .button.button-small { 
-                min-height: 20px; 
-                vertical-align: middle; 
-                border-color: #444; 
-                color: #ddd; 
-                background: #333; 
-                line-height: 2; 
-            }
-            .wp-list-table .button.button-small.button-delete {
-                color: #d63638;
-            }
-            .wp-list-table .button-small:hover, .wp-list-table .button-small:focus {
-                border-color: #555; 
-                background: #444; 
-                color: #ddd; 
-                box-shadow: none;
-            }
-            .grozs-modal-header .button.close-button { 
-                padding: 0;
-                background: none;
-                border: solid 1px #444;
-                border-radius: 50%;
-                color: #666;
-                font-size: 14px;
-                text-align: center;
-                line-height: 1;
-                width: 30px;
-                height: 30px; 
-            }
-            .grozs-modal-header .button.close-button:hover { 
-                color: #999 !important; 
-                border-color: #666 !important; 
-            }
-            #grozs-modal-content { 
-                scrollbar-width: thin; 
-                scrollbar-color: #444 #1e1e1e; 
-            }
-            #grozs-modal-content::-webkit-scrollbar { 
-                width: 8px; 
-            }
-            #grozs-modal-content::-webkit-scrollbar-track { 
-                background: #1e1e1e; 
-            }
-            #grozs-modal-content::-webkit-scrollbar-thumb {
-                background-color: #444; 
-                border-radius: 10px; 
-                border: 2px solid #1e1e1e;
-            }
-            #wpbody, #wpbody-content { 
-                background: #2b2b2b; 
-            }
-            #wpfooter { 
-                padding: 20px; color: #999; 
-                color: #999;
-                background: #1e1e1e; 
-                border-top: solid 1px #444; 
-            }
-            #wpcontent, #wpbody-content { 
-                padding: 0 !important; 
-            }
-            #wpbody-content {
-                padding-bottom: 65px !important;
-            }
-            ul#adminmenu .menu-icon-produkti a.wp-has-current-submenu:after { 
-                border-right-color: #2b2b2b; 
-            }
-            .wrap {
-                margin: 0;
-                padding: 0;
-                background: #2b2b2b;
-            }
-            hr {
-                margin: 20px 0;
-                border: none;
-                border-top: solid 1px #444;
-            }
-            .grozs-admin-content h2 {
-                margin: 0;
-                color: #fff;
-            }
-            .border-bottom {
-                border: none;
-                border-bottom: solid 1px #444;
-            }
-            .grozs-admin-header {
-                padding: 30px 25px;
-                background: #1e1e1e;
-                border-bottom: solid 1px #444;
-            }
-            .grozs-admin-header .grozs-admin-header-title {
-                padding: 0;
-                margin: 0;
-                color: #fff;
-                line-height: 1;
-            }
-            .grozs-admin-header .grozs-admin-header-title i {
-                margin-right: 3px;
-            }
-            .grozs-admin-content {
-                padding: 0;
-                color: #999;
-            }
-            .grozs-content-section {
-                padding: 40px 25px;
-            }
-            .grozs-orders-full { 
-                max-width: none !important; 
-                margin: 0 !important; 
-                padding: 0 20px; 
-            }
-
-            .wp-list-table tr.order-row { cursor: pointer; }
-            .wp-list-table tr.order-row:hover { background: #333 !important; }
-
-            /* Grozs pasūtījumu tabulas stili */
-            .wp-list-table.grozs-orders-table {
-                border:1px solid #444;
-            }
-            .wp-list-table.grozs-orders-table thead {
-                background:#1e1e1e;
-                border-bottom:1px solid #444;
-            }
-            .wp-list-table.grozs-orders-table th,
-            .wp-list-table.grozs-orders-table td {
-                padding:10px;
-            }
-            .wp-list-table.grozs-orders-table td.order-details-cell {
-                padding:0;
-            }
-            .order-empty-row {
-                background:#2b2b2b;
-                color:#fff;
-            }
-            .order-details-row {
-                display:none;
-                background:#232323;
-            }
-            .order-details-cell {
-                padding:0;
-            }
-            /* Modal un produktu detaļu stili */
-            .grozs-modal-wrapper {
-                display:flex;
-                justify-items:stretch;
-                flex-wrap:wrap;
-                padding:20px;
-                gap:20px;
-            }
-            .form-table-container {
-                max-width: 30%;
-                flex: 0 0 auto;
-                padding:20px;
-                background:#2b2b2b;
-                border-radius:10px;
-            }
-            .form-table-container h2 {
-                color:#fff;
-                margin:0 0 20px 0;
-            }
-            .form-table {
-                margin:0;
-                color:#999;
-            }
-            .pasutitie-produkti-container {
-                flex: 1 1 0;
-                min-width:0;
-                padding:20px;
-                background:#2b2b2b;
-                border-radius:10px;
-            }
-            .pasutitie-produkti-container h2 {
-                color:#fff;
-                margin:0 0 20px 0;
-            }
-            .pp-wraper {
-                display:flex;
-                gap:20px;
-                flex-wrap:wrap;
-            }
-            .product-details-table {
-                width:100%;
-                margin:0;
-                color:#999;
-                border-collapse:collapse;
-            }
-            .product-details-table thead {
-                background:#1e1e1e;
-                border-bottom:1px solid #444;
-            }
-            .product-details-table th,
-            .product-details-table td {
-                padding:10px;
-            }
-            .product-details-table td.text-center,
-            .product-details-table th.text-center {
-                text-align:center;
-            }
-            .product-details-table tr.product-details-total-row {
-                background:#1e1e1e;
-            }
-            .product-details-table tr.product-details-row {
-                border-bottom:1px solid #444;
-            }
-            .product-image-thumb {
-                width:25px;
-                height:auto;
-                border:1px solid #444;
-            }
-            .grozs-modal-footer {
-                display: flex;
-                gap: 5px;
-                flex: 0 0 100%;
-                flex-direction: row;
-                justify-content: space-between;
-                padding:20px;
-                box-sizing:border-box;
-                background:#2b2b2b;
-                border-radius:10px;
-            }
-            .grozs-resend-buttons {
-                display: flex;
-                gap: 5px;
-                align-items: center;
-            }
-        </style>';
+    // Admin CSS is enqueued from `includes/admin-menu.php` (assets/css/admin.css)
     }
 }
 
@@ -343,7 +78,8 @@ function grozs_admin_orders_page() {
                                 $produkti = $titles ? implode(', ', $titles) : '-';
                                 $bg = ($i++ % 2 === 0) ? '#2b2b2b' : '#1e1e1e';
                                 ?>
-                                <tr class="order-row" data-order-id="<?= esc_attr($order->ID) ?>" style="background:<?= esc_attr($bg) ?>;">
+                                <?php $row_class = ($i % 2 === 0) ? 'order-row--even' : 'order-row--odd'; ?>
+                                <tr class="order-row <?= esc_attr($row_class) ?>" data-order-id="<?= esc_attr($order->ID) ?>">
                                     <td>#<?= $public_id ? esc_html($public_id) : '—' ?></td>
                                     <td><?= esc_html($vards) ?></td>
                                     <td><?= esc_html($epasts) ?></td>
@@ -394,7 +130,7 @@ function grozs_admin_orders_page() {
             // Aizveram citus un atveram izvēlēto
             closeAllDetails();
             $('[data-order-id="'+orderId+'"]').addClass('is-open');
-            $detailsCell.html('<div style="padding:20px;">Notiek ielāde...</div>');
+            $detailsCell.html('<div class="grozs-loading">Notiek ielāde...</div>');
             $detailsRow.show();
 
             $.post(AJAXURL, {
@@ -406,10 +142,10 @@ function grozs_admin_orders_page() {
                     $detailsCell.html(response.data.content);
                 } else {
                     const msg = (response && response.data) ? response.data : 'Nezināma kļūda';
-                    $detailsCell.html('<div style="padding:20px;">Kļūda: ' + msg + '</div>');
+                    $detailsCell.html('<div class="grozs-loading grozs-loading--error">Kļūda: ' + msg + '</div>');
                 }
             }).fail(function(){
-                $detailsCell.html('<div style="padding:20px;">Kļūda: servera kļūda.</div>');
+                $detailsCell.html('<div class="grozs-loading grozs-loading--error">Kļūda: servera kļūda.</div>');
             });
         }
 
@@ -699,7 +435,7 @@ function grozs_render_order_detail_content($order_id) {
                 <tr><th>E-pasts:</th><td><?= esc_html($epasts) ?></td></tr>
                 <tr><th>Telefons:</th><td><?= esc_html($telefons) ?></td></tr>
                 <tr><th>Adrese:</th><td><?= esc_html($adrese) ?></td></tr>
-                <tr><th style="margin-bottom:0;">Piezīmes:</th><td style="margin-bottom:0;"><?= nl2br(esc_html($piezimes)) ?></td></tr>
+                <tr><th class="grozs-no-margin">Piezīmes:</th><td class="grozs-no-margin"><?= nl2br(esc_html($piezimes)) ?></td></tr>
             </table>
         </div>
         <div class="pasutitie-produkti-container">
@@ -718,7 +454,7 @@ function grozs_render_order_detail_content($order_id) {
                     <?php foreach ((array) $grozs as $item): ?>
                         <tr class="product-details-row">
                             <td>
-                                <div style="display:flex;align-items:center;gap:10px;">
+                                <div class="grozs-product-meta">
                                     <?php if (!empty($item['image'])): ?>
                                         <img src="<?= esc_url($item['image']) ?>" alt="" class="product-image-thumb">
                                     <?php endif; ?>
@@ -759,7 +495,7 @@ function grozs_render_order_detail_content($order_id) {
             <div class="grozs-resend-buttons">
                 <button type="button" class="button button-small grozs-resend-admin"  data-order-id="<?= (int) $order_id; ?>">Atkārtoti nosūtīt admina e-pastu</button>
                 <button type="button" class="button button-small grozs-resend-client" data-order-id="<?= (int) $order_id; ?>">Atkārtoti nosūtīt klienta e-pastu</button>
-                <span class="grozs-resend-status" style="margin-left:10px;color:#9acd32;"></span>
+                <span class="grozs-resend-status"></span>
             </div>
 
             <a href="<?= esc_url( wp_nonce_url( admin_url('admin.php?page=grozs_orders&delete=' . $order_id), 'delete_order_' . $order_id ) ) ?>" class="button button-small button-delete">Dzēst pasūtījumu</a>

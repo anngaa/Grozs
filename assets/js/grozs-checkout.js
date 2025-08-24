@@ -1,6 +1,46 @@
 jQuery(document).ready(function ($) {
 
-    
+    // Grozs helper: scrollē un fokusē success paziņojumu, lai lietotājs to noteikti pamanītu.
+    // headerOffset var nodot, ja ir sticky header, citādi mēģināsim to noteikt automātiski.
+    function grozsFocusSuccess(selector = '.grozs-form-success', headerOffset = null) {
+        var el = document.querySelector(selector);
+        if (!el) return;
+
+        // nodrošinām, ka elemnts var tikt fokusēts
+        el.setAttribute('tabindex', '-1');
+
+        // ja nav norādīts offset, mēģinām atrast tipisku header elementu
+        if (headerOffset === null) {
+            var header = document.querySelector('.site-header, header, #masthead, .header, .site-top');
+            headerOffset = (header && header.offsetHeight) ? header.offsetHeight : 0;
+        }
+
+        // neliels papildus padding, lai paziņojums nebūtu pārāk tuvu augšai
+        var extraPadding = 10;
+
+        var rect = el.getBoundingClientRect();
+        var absoluteTop = rect.top + window.pageYOffset - headerOffset - extraPadding;
+        if (absoluteTop < 0) absoluteTop = 0;
+
+        // smooth scroll, tad fokusējam (focus neizsauc papildus scroll, izmanto preventScroll)
+        try {
+            window.scrollTo({ top: absoluteTop, behavior: 'smooth' });
+        } catch (e) {
+            // ja smooth nav pieejams
+            window.scrollTo(0, absoluteTop);
+        }
+
+        // focus pēc īsas aiztures, lai scroll pabeidzas
+        setTimeout(function () {
+            try {
+                el.focus({ preventScroll: true });
+            } catch (e) {
+                // Fallback ja preventScroll nav atbalstīts
+                el.focus();
+            }
+        }, 400);
+    }
+
     function renderCheckoutSummary() {
         let cart = JSON.parse(localStorage.getItem('grozs_cart')) || [];
         const $summary = $('#grozs-order-summary');
@@ -13,6 +53,7 @@ jQuery(document).ready(function ($) {
             $summary.html('<p class="grozs-cart-empty">Neviens produkts vēl nav pievienots.</p>');
             $total.text('0.00');
             $('#grozs-checkout-order-form-wrapper').hide();
+            $('.grozs-form-success').hide();
             $('#grozs-empty-wrapper').show();
             return;
         }
@@ -51,6 +92,7 @@ jQuery(document).ready(function ($) {
         $total.text(sum.toFixed(2));
         $('#grozs-checkout-order-form-wrapper').show();
         $('#grozs-empty-wrapper').hide();
+        $('.grozs-form-success').hide();
     }
 
     // ✅ Produkta noņemšanas poga
@@ -90,7 +132,7 @@ jQuery(document).ready(function ($) {
             },
             success: function (res) {
                 if (res.success) {
-                    $('.grozs-form-response').html('<p style="color:green;">Paldies par Jūsu pasūtījumu! Mēs ar Jums sazināsimies, tiklīdz būsim apstrādājuši pasūtījumu.</p>');
+                    $('.grozs-form-success').show();
                     $('#grozs-order-form')[0].reset();
                     $('#grozs-order-summary').html('<p class="grozs-cart-empty">Neviens produkts vēl nav pievienots.</p>');
                     $('#grozs-total-sum').text('0.00');
@@ -99,6 +141,9 @@ jQuery(document).ready(function ($) {
                     $('#grozs-cart-count').hide();
                     $('#grozs-checkout-order-form-wrapper').hide();
                     $('#grozs-empty-wrapper').show();
+
+                    // Aizsūtām scroll & focus uz success paziņojumu
+                    grozsFocusSuccess('.grozs-form-success');
                 } else {
                     $('.grozs-form-response').html('<p style="color:red;">Kļūda! Mēģiniet vēlreiz.</p>');
                 }

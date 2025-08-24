@@ -90,7 +90,7 @@ class Grozs_ArchivePrice_Widget extends \Elementor\Widget_Base {
         }
 
         if ($min_price !== null) {
-            echo '<div class="grozs-archive-price">' . esc_html($label) . ' € ' . number_format($min_price, 2, '.', '') . '</div>';
+            echo '<div class="grozs-archive-price"><span class="grozs-price-currency">' . esc_html($label) . ' €</span>' . number_format($min_price, 2, '.', '') . '</div>';
         }
     }
 }

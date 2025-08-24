@@ -21,6 +21,27 @@ function grozs_register_admin_submenu() {
     );
 }
 
+    /**
+     * Ielādē spraudņa administrācijas CSS tikai attiecīgajās Grozs admin lapās.
+     */
+    function grozs_enqueue_admin_css($hook) {
+        // Nosakām atļautās admin lapas hook nosaukumus, kur ielādēt CSS
+        $allowed_hooks = array(
+            // submenu under 'produkti' produces hooks in format 'produkti_page_{menu_slug}'
+            'produkti_page_grozs_settings',
+            'produkti_page_grozs_orders',
+        );
+
+        // Ja šī lapa nav mūsu sarakstā, iziet
+        if (!in_array($hook, $allowed_hooks, true)) {
+            return;
+        }
+
+        $css_path = plugin_dir_url(__FILE__) . '../assets/css/admin.css';
+        wp_register_style('grozs-admin', $css_path, array(), filemtime(plugin_dir_path(__FILE__) . '../assets/css/admin.css'));
+        wp_enqueue_style('grozs-admin');
+    }
+    add_action('admin_enqueue_scripts', 'grozs_enqueue_admin_css');
 // Iestatījumu reģistrācija
 add_action('admin_init', 'grozs_register_settings');
 function grozs_register_settings() {

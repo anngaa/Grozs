@@ -37,7 +37,33 @@ add_action('wp_ajax_nopriv_submit_grozs_order', __NAMESPACE__ . '\grozs_handle_o
 function grozs_handle_order() {
     check_ajax_referer('grozs_order_nonce', 'nonce');
     $form = $_POST['form'] ?? [];
-    $cart = $_POST['cart'] ?? [];
+
+    // Normalize and sanitize cart payload coming from the client
+    $cart_raw = $_POST['cart'] ?? [];
+    $cart = [];
+    if (is_array($cart_raw)) {
+        foreach ($cart_raw as $ci) {
+            if (!is_array($ci)) continue;
+
+            $item = [];
+            $item['id'] = isset($ci['id']) ? intval($ci['id']) : 0;
+            $item['title'] = isset($ci['title']) ? sanitize_text_field($ci['title']) : '';
+            $item['image'] = isset($ci['image']) ? esc_url_raw($ci['image']) : '';
+            $item['link'] = isset($ci['link']) ? esc_url_raw($ci['link']) : '';
+            $item['price'] = isset($ci['price']) ? floatval($ci['price']) : 0.0;
+            $item['quantity'] = isset($ci['quantity']) ? intval($ci['quantity']) : 1;
+
+            // Optional configuration fields (sanitize as text)
+            if (isset($ci['krasa'])) $item['krasa'] = sanitize_text_field($ci['krasa']);
+            if (isset($ci['izmers'])) $item['izmers'] = sanitize_text_field($ci['izmers']);
+            if (isset($ci['produkta_izmers'])) $item['produkta_izmers'] = sanitize_text_field($ci['produkta_izmers']);
+            if (isset($ci['materials'])) $item['materials'] = sanitize_text_field($ci['materials']);
+            if (isset($ci['atvilknes'])) $item['atvilknes'] = sanitize_text_field($ci['atvilknes']);
+            if (isset($ci['pacelams'])) $item['pacelams'] = sanitize_text_field($ci['pacelams']);
+
+            $cart[] = $item;
+        }
+    }
 
     if (empty($form) || empty($cart)) {
         wp_send_json_error(['message' => 'Trūkst datu.']);

@@ -9,161 +9,15 @@ function grozs_admin_head_setup_settings() {
         // 1. Noņem visus admin_notices, lai tie netiktu rādīti augšpusē
         remove_all_actions('admin_notices');
 
-        // 2. Pievieno CSS stilus
-        echo '<style>
-            body.wp-admin {
-                background-color: #2b2b2b !important;
-            }
-            #wpwrap, #wpcontent, #wpbody, #wpbody-content {
-                background-color: #2b2b2b !important;
-            }
-            #wpcontent {
-                padding: 0;
-            }
-            #wpfooter {
-			padding: 20px;
-			color: #999;
-			background: #1e1e1e;
-			border-top: solid 1px #444;
-            }
-            ul#adminmenu .menu-icon-produkti a.wp-has-current-submenu:after {
-                border-right-color: #2b2b2b;
-            }
-            .wrap {
-                margin: 0;
-                padding: 0;
-                background: #2b2b2b;
-            }
-            hr {
-                margin: 20px 0;
-                border: none;
-                border-top: solid 1px #444;
-            }
-            .grozs-admin-content h2 {
-                margin: 0;
-                color: #fff;
-            }
-            .border-bottom {
-                border: none;
-                border-bottom: solid 1px #444;
-            }
-            .grozs-admin-header {
-                padding: 30px 25px;
-                background: #1e1e1e;
-                border-bottom: solid 1px #444;
-            }
-            .grozs-admin-header .grozs-admin-header-title {
-                padding: 0;
-                margin: 0;
-                color: #fff;
-                line-height: 1;
-            }
-            .grozs-admin-header .grozs-admin-header-title i {
-                margin-right: 3px;
-            }
-            .wrap .notice, .wrap .grozs-admin-header .notice {
-                display: inline-block; 
-                margin: 15px 0 0 0; 
-                background:#333; 
-                color:#ddd; 
-                border: solid 1px #444; 
-                border-left: solid 4px #666;
-            }
-            .grozs-admin-header .notice.notice-error {
-                border-left-color: #d63638;
-            }
-            .grozs-admin-content {
-                padding: 0;
-                color: #999;
-            }
-            .grozs-admin-content .button {
-                border: solid 1px #333;
-                color: #ddd;
-                vertical-align: inherit;
-            }
-            .grozs-admin-content .button-primary {
-                background: #333;
-                border: solid 1px #444;
-                color: #ddd
-            }
-            .grozs-admin-content .button:hover, .grozs-admin-content .button-primary:hover, .grozs-admin-content .button:focus, .grozs-admin-content .button-primary:focus {
-                background: #444;
-                border: solid 1px #555;
-                color: #ddd;
-                box-shadow: none;
-            }
-            .grozs-content-section {
-                padding: 40px 25px;
-            }
-            .grozs-content-section input[type=text] {
-                background: none;
-                border-color: #444;
-                color: #999;
-            }
-            .grozs-notification-toggles {
-                color: #ddd;
-            }
-            .grozs-toggle {
-                position: relative;
-                display: inline-block;
-                width: 40px;
-                height: 20px;
-                vertical-align: middle;
-            }
-            .grozs-toggle input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-            .grozs-slider {
-                position: absolute;
-                cursor: pointer;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #444;
-                transition: 0.4s;
-                border-radius: 34px;
-            }
-            .grozs-slider:before {
-                position: absolute;
-                content: "";
-                height: 14px;
-                width: 14px;
-                left: 3px;
-                top: 3px;
-                background-color: #999;
-                transition: 0.4s;
-                border-radius: 50%;
-            }
-            .grozs-toggle input:checked + .grozs-slider {
-                background-color: #2271b1;
-            }
-            .grozs-toggle input:checked + .grozs-slider:before {
-                background-color: #fff;
-                transform: translateX(20px);
-            }
-            .custom-file-upload {
-                display: inline-block;
-                padding: 5px 10px;
-                cursor: pointer;
-                background: none;
-                color: #ddd;
-                border: solid 1px #444;
-                border-radius: 3px;
-                font-size: 13px;
-                vertical-align: inherit;
-            }
-            .custom-file-upload:hover, .custom-file-upload:focus {
-                background-color: #444;
-                border-color: #555;
-                color: #ddd;
-            }
-            input[type="file"] {
-                display: none;
-            }
-        </style>';
+        // 2. Ielādē administrācijas CSS no assets — izdrukā saiti head, lai stili būtu pieejami uzreiz
+        $css_file = plugin_dir_path(__FILE__) . '../assets/css/admin.css';
+        $css_url  = plugin_dir_url(__FILE__) . '../assets/css/admin.css';
+        $ver = file_exists($css_file) ? filemtime($css_file) : null;
+        if ($ver) {
+            echo '<link rel="stylesheet" href="' . esc_url( $css_url . '?ver=' . $ver ) . '" />';
+        } else {
+            echo '<link rel="stylesheet" href="' . esc_url( $css_url ) . '" />';
+        }
     }
 }
 
@@ -202,10 +56,10 @@ function grozs_admin_settings_page() {
         <div class="grozs-content-section section-email-notifications border-bottom">
             <h2>E-Pasta Paziņojumi</h2>
             <p>Izvēlieties kādi e-pasta paziņojumi tiek sūtīti kad tiek veikts pasūtījums.</p>
-			<form method="post" action="options.php" class="grozs-notification-toggles" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <form method="post" action="options.php" class="grozs-notification-toggles grozs-form--stacked">
 				<?php settings_fields('grozs_settings_group'); ?>
 
-				<label style="display: flex; align-items: center; gap: 10px;">
+                <label class="grozs-form-row">
 					<span class="grozs-toggle">
 						<input type="checkbox" name="grozs_notify_admin_email" id="grozs_notify_toggle_admin_email" value="1" <?php checked(get_option('grozs_notify_admin_email'), '1'); ?>>
 						<span class="grozs-slider"></span>
@@ -213,7 +67,7 @@ function grozs_admin_settings_page() {
 					<span for="grozs_notify_toggle_admin_email">Sūtīt paziņojumus uz Admina e-pastu</span>
 				</label>
 
-				<label style="display: flex; align-items: center; gap: 10px;">
+                <label class="grozs-form-row">
 					<span class="grozs-toggle custom-email">
 						<input type="checkbox" name="grozs_notify_custom_email_enabled" id="grozs_notify_toggle_custom_email" class="grozs-toggle-custom-email" value="1" <?php checked(get_option('grozs_notify_custom_email_enabled'), '1'); ?>>
 						<span class="grozs-slider"></span>
@@ -221,9 +75,9 @@ function grozs_admin_settings_page() {
 					<span for="grozs_notify_toggle_custom_email">Sūtīt paziņojumus uz pielāgotu e-pastu</span>
 				</label>
 
-				<input type="text" id="grozs_custom_notification_email" name="grozs_custom_notification_email" style="width: 300px; margin-bottom: 10px;" value="<?php echo esc_attr(get_option('grozs_custom_notification_email')); ?>">
+                <input type="text" id="grozs_custom_notification_email" name="grozs_custom_notification_email" class="grozs-input grozs-input--wide" value="<?php echo esc_attr(get_option('grozs_custom_notification_email')); ?>">
 
-				<label style="display: flex; align-items: center; gap: 10px;">
+                <label class="grozs-form-row">
 					<span class="grozs-toggle">
 						<input type="checkbox" name="grozs_notify_form_user_email" id="grozs_notify_toggle_form_email" value="1" <?php checked(get_option('grozs_notify_form_user_email'), '1'); ?>>
 						<span class="grozs-slider"></span>
@@ -243,12 +97,12 @@ function grozs_admin_settings_page() {
         <div class="grozs-content-section border-bottom">
             <h2>Cenu Importēšana no  CSV Faila</h2>
             <p>Augšupielādē CSV failu ar cenām, kas tiks importētas uz produktu ACF laukiem pēc produkta sluga.</p>
-            <form method="post" enctype="multipart/form-data" style="margin-top: 20px;">
+            <form method="post" enctype="multipart/form-data" class="grozs-form--spaced">
                 <label class="custom-file-upload">
                     <input type="file" name="grozs_csv_import_file" accept=".csv" id="grozs-csv-upload">
                     Izvēlēties CSV failu
                 </label>
-                <span id="file-name" style="margin: 0 20px 0 5px; color: #999;">Nav izvēlēts neviens fails</span>
+                <span id="file-name" class="grozs-file-name">Nav izvēlēts neviens fails</span>
                 <?php submit_button('Importēt cenas', 'primary', 'grozs_import_csv', false); ?>
             </form>
         </div>
@@ -267,7 +121,7 @@ function grozs_admin_settings_page() {
             <h2>Cenu Eksportēšana uz CSV failu</h2>
             <p>Lejupielādē CSV failu ar visu produktu cenām, balstoties uz ACF laukiem.</p>
 
-            <form method="post" style="margin-top: 20px;">
+            <form method="post" class="grozs-form--spaced">
                 <?php submit_button('Eksportēt cenas', 'primary', 'grozs_export_csv', false); ?>
             </form>
         </div>
@@ -280,6 +134,11 @@ function grozs_admin_settings_page() {
 //Cenu eksportēšanas uz csv funkcija
 function grozs_export_prices_to_csv() {
     if (!current_user_can('manage_options')) return;
+
+    // Notīrām jebkādu buferi, lai pirms headeriem netiktu izdrukāts saturs
+    if (function_exists('ob_get_level')) {
+        while (ob_get_level() > 0) { @ob_end_clean(); }
+    }
 
     header('Content-Type: text/csv; charset=UTF-8');
     header('Content-Disposition: attachment; filename="tg-cenu-eksports.csv"');
@@ -306,7 +165,7 @@ function grozs_export_prices_to_csv() {
     ];
     fputcsv($output, $header, ';');
 
-    $query = new WP_Query([
+    $query = new \WP_Query([
         'post_type'      => 'produkti',
         'posts_per_page' => -1,
         'post_status'    => 'publish',
@@ -324,7 +183,25 @@ function grozs_export_prices_to_csv() {
         $is_skapis = is_array($produkts_izmeri) && count($produkts_izmeri);
 
         if ($is_gulta) {
+            // Papildu lauki (Atvilknes un Paceļams matracis) drukājas tikai pirmajai rindai katram produktam
+            $extras_written = false;
             foreach ($matraci as $rinda) {
+                $extras = [];
+                if (!$extras_written) {
+                    $extras = [
+                        get_field('atvilknes_cena_priedei', $post_id),
+                        get_field('atvilknes_cena_osim', $post_id),
+                        get_field('atvilknes_cena_ozolam', $post_id),
+                        get_field('pm_cena_priedei', $post_id),
+                        get_field('pm_cena_osim', $post_id),
+                        get_field('pm_cena_ozolam', $post_id),
+                    ];
+                    $extras_written = true;
+                } else {
+                    // Tukšas kolonnas, lai neradītu mulsumu - šie lauki nav atkarīgi no izmēra
+                    $extras = ['', '', '', '', '', ''];
+                }
+
                 $row = [
                     $title,
                     $slug,
@@ -333,12 +210,7 @@ function grozs_export_prices_to_csv() {
                     $rinda['cena_priedei'] ?? '',
                     $rinda['cena_osim'] ?? '',
                     $rinda['cena_ozolam'] ?? '',
-                    get_field('atvilknes_cena_priedei', $post_id),
-                    get_field('atvilknes_cena_osim', $post_id),
-                    get_field('atvilknes_cena_ozolam', $post_id),
-                    get_field('pm_cena_priedei', $post_id),
-                    get_field('pm_cena_osim', $post_id),
-                    get_field('pm_cena_ozolam', $post_id),
+                    ...$extras,
                 ];
                 fputcsv($output, $row, ';');
             }
@@ -457,15 +329,26 @@ function grozs_import_prices_from_csv() {
                 'cena_ozolam'    => $data['Cena ozolam'],
             ];
 
-            // Papildu laukus saglabājam tikai vienreiz
+            // Papildu laukus saglabājam tikai vienreiz (un tikai, ja vērtības nav tukšas)
             if (!isset($imported[$post_id]['extra_set'])) {
-                update_field('atvilknes_cena_priedei', $data['Atvilknes cena priedei'], $post_id);
-                update_field('atvilknes_cena_osim',    $data['Atvilknes cena osim'], $post_id);
-                update_field('atvilknes_cena_ozolam',  $data['Atvilknes cena ozolam'], $post_id);
-                update_field('pm_cena_priedei',        $data['Cena pac. matr. priedei'], $post_id);
-                update_field('pm_cena_osim',           $data['Cena pac. matr. osim'], $post_id);
-                update_field('pm_cena_ozolam',         $data['Cena pac. matr. ozolam'], $post_id);
-                $imported[$post_id]['extra_set'] = true;
+                $has_any_extra = false;
+                $extra_map = [
+                    'atvilknes_cena_priedei' => 'Atvilknes cena priedei',
+                    'atvilknes_cena_osim'    => 'Atvilknes cena osim',
+                    'atvilknes_cena_ozolam'  => 'Atvilknes cena ozolam',
+                    'pm_cena_priedei'        => 'Cena pac. matr. priedei',
+                    'pm_cena_osim'           => 'Cena pac. matr. osim',
+                    'pm_cena_ozolam'         => 'Cena pac. matr. ozolam',
+                ];
+                foreach ($extra_map as $field_key => $csv_key) {
+                    if (isset($data[$csv_key]) && $data[$csv_key] !== '') {
+                        update_field($field_key, $data[$csv_key], $post_id);
+                        $has_any_extra = true;
+                    }
+                }
+                if ($has_any_extra) {
+                    $imported[$post_id]['extra_set'] = true;
+                }
             }
         }
 
