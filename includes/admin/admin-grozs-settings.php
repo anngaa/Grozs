@@ -295,7 +295,7 @@ function grozs_import_prices_from_csv() {
         // Nosaka, kuras kategorijas ir pie produkta
         $terms = wp_get_post_terms($post_id, 'kategorijas', ['fields' => 'slugs']);
         $is_gulta = in_array('gultas', $terms);
-        $is_skapis = in_array('naktsskapji', $terms) || in_array('kumodes', $terms);
+        $is_skapis = in_array('naktsskapisi', $terms) || in_array('kumodes', $terms);
 
         // Inicializē, ja vajadzīgs
         if (!isset($imported[$post_id])) {
